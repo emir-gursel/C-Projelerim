@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdint.h>
+#include<math.h>
+
+int sayininküpünüal(int sayi);
+
+
+    int main()
+    {
+        int sayi,küpü;
+        printf("sayiyi giriniz: ");
+        scanf("%d",&sayi);
+        
+        küpü=int sayininküpünüal(sayi);
+        
+        printf("%d sayinin küpü= %d",sayi,küpü);
+        
+        return 0;
+    }
+    
+    int sayininküpünüal(int sayi)
+    {
+       return (sayi*sayi*sayi);
+    }

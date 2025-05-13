@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdint.h>
+#include<math.h>
+
+int SayiAsalMi(int sayi);
+
+    int main()
+    {
+        int sayi;
+        
+        printf("sayiyi giriniz: ");
+        scanf("%d",&sayi);
+        
+        if(SayiAsalMi(sayi))
+        {
+            printf("sayi asaldir.");
+        }
+        else
+        {
+            printf("sayi asal degildir.");
+        }
+        
+        return 0;
+    }
+    
+  int SayiAsalMi(int sayi)
+  {
+      for (int i = 2; i <sayi/2; i++) 
+      {
+        if (sayi % i == 0) 
+        {
+            return 0;  
+        }
+    }
+    return 1; 
+  }

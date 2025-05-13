@@ -1,0 +1,21 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    int i,sayi;
+    int faktoriyel=1;
+
+    printf("sayiyi gir: ");
+    scanf("%d",&sayi);
+    
+    if(sayi<0){
+        printf("pozitif sayi girin!\n ");
+    }else{
+        for(i=1; i<=sayi; i++){
+            faktoriyel *=i;
+        }
+        printf("%d!=%d\n",sayi,faktoriyel);
+    }
+    return 0;
+}

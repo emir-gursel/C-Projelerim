@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdint.h>
+#include<math.h>
+
+int SayiCiftMi(int sayi)
+{
+    if((sayi%2)==0)
+    return 1;
+    else
+    return 0;
+}
+    int main()
+    {
+        int sayi;
+        printf("Bir sayi degeri girin: ");
+        scanf("%d",&sayi);
+        if(SayiCiftMi(sayi))
+        {
+        printf("bu bir çift sayidir.");
+        }
+        else
+        {
+            printf("bu bir tek sayidir. ");
+        }
+        return 0;
+    }
+    

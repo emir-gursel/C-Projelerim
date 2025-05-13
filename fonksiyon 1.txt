@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdint.h>
+#include<math.h>
+
+float CemberinCapiHesapla(float yaricap);
+float CemberinCevresiHesapla(float yaricap);
+float CemberinAlaniHesapla(float yaricap);
+
+int main()
+{
+   float yaricap,cap,cevre,alan;
+   printf("Cemberin yaricapini giriniz: ");
+   scanf("%f",&yaricap);
+   
+   cap=CemberinCapiHesapla(yaricap);
+   cevre=CemberinCevresiHesapla(yaricap);
+   alan=CemberinAlaniHesapla(yaricap);
+   
+   printf("Cember Capı= %.2f birim.\n",cap);
+   printf("Cember Cevresi= %.2f birim.\n",cevre); 
+   printf("Cember Alani= %.2f birim kare.\n",alan); 
+   
+    return 0;
+}
+    float CemberinCapiHesapla(float yaricap)
+    {
+        return(2*yaricap);
+    }
+    float CemberinCevresiHesapla(float yaricap)
+    {
+        return(2*M_PI*yaricap);
+    }
+    float CemberinAlaniHesapla(float yaricap)
+    {
+        return(2*yaricap*yaricap);
+    }
