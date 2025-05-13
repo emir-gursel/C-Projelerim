@@ -1,0 +1,96 @@
+#include <stdio.h> // Gerekli başlık dosyasını dahil ederiz (giriş/çıkış işlemleri için)
+#define OGRENCI_SAYISI 10 // Öğrenci sayısını 10 olarak belirleriz
+#define DERS_SAYISI 4 // Her öğrencinin aldığı ders sayısını 4 olarak belirleriz
+
+// Öğrenci bilgilerini tutacak yapı (struct) tanımlıyoruz
+typedef struct {
+    int numara; // Öğrencinin numarası
+    char ad[40]; // Öğrencinin adı
+    char soyad[40]; // Öğrencinin soyadı
+    float notlar[DERS_SAYISI]; // Öğrencinin ders notlarını tutan dizi
+} ogrenci;
+
+// Öğrencinin notlarını görüntüleyen fonksiyon
+void notGoruntule(ogrenci* ogrenciler, int numara) {
+    for (int i = 0; i < OGRENCI_SAYISI; i++) { // Tüm öğrenciler arasında döngü
+        if (ogrenciler[i].numara == numara) { // Eğer öğrenci numarası eşleşirse
+            printf("Ogrenci: %s %s \n", ogrenciler[i].ad, ogrenciler[i].soyad); // Öğrencinin adını ve soyadını yazdır
+            for (int j = 0; j < DERS_SAYISI; j++) { // Öğrencinin ders notları arasında döngü
+                printf("Ders %d Notu: %.2f\n", j + 1, ogrenciler[i].notlar[j]); // Her dersin notunu yazdır
+            }
+            return; // Fonksiyonu bitir
+        }
+    }
+    printf("Ogrenci Bulunamadi. \n"); // Öğrenci bulunamadığında hata mesajı yazdır
+}
+
+// Öğrencinin not ortalamasını hesaplayan fonksiyon
+void notOrtalaması(ogrenci* ogrenciler, int numara) {
+    for (int i = 0; i < OGRENCI_SAYISI; i++) { // Tüm öğrenciler arasında döngü
+        if (ogrenciler[i].numara == numara) { // Eğer öğrenci numarası eşleşirse
+            float toplam = 0; // Notların toplamını tutmak için değişken
+            for (int j = 0; j < DERS_SAYISI; j++) { // Öğrencinin ders notları arasında döngü
+                toplam += ogrenciler[i].notlar[j]; // Her dersin notunu toplama ekle
+            }
+            printf("Ogrencinin Not Ortalamasi: %.2f\n", toplam / DERS_SAYISI); // Ortalamayı hesapla ve yazdır
+            return; // Fonksiyonu bitir
+        }
+    }
+    printf("Ogrenci Bulunamadi. \n"); // Öğrenci bulunamadığında hata mesajı yazdır
+}
+
+// Öğrencinin notlarını güncellemeye yarayan fonksiyon
+void notGir(ogrenci* ogrenciler, int numara) {
+    for (int i = 0; i < OGRENCI_SAYISI; i++) { // Tüm öğrenciler arasında döngü
+        if (ogrenciler[i].numara == numara) { // Eğer öğrenci numarası eşleşirse
+            printf("\nOgrenci: %s %s\n", ogrenciler[i].ad, ogrenciler[i].soyad); // Öğrencinin adını ve soyadını yazdır
+            for (int j = 0; j < DERS_SAYISI; j++) { // Öğrencinin dersleri arasında döngü
+                printf("Ders %d icin yeni notu girin: ", j + 1); // Her ders için yeni notu sor
+                scanf("%f", &ogrenciler[i].notlar[j]); // Yeni notu al ve ilgili öğrencinin notlar dizisine kaydet
+            }
+            printf("\nNotlar güncellendi.\n"); // Notların güncellendiğini yazdır
+            return; // Fonksiyonu bitir
+        }
+    }
+    printf("\nOgrenci bulunamadi.\n"); // Öğrenci bulunamadığında hata mesajı yazdır
+}
+
+int main() {
+    // Öğrencilerin bilgilerini başlatıyoruz (numara, ad, soyad, notlar)
+    ogrenci ogrenciler[OGRENCI_SAYISI] = {
+        {101, "ali", "ileri", {45, 55, 65, 75}},
+        {102, "aliye", "geri", {54, 65, 76, 87}},
+        {103, "ece", "dogru", {76, 45, 76, 65}},
+        {104, "kerem", "bilir", {54, 65, 76, 56}},
+        {105, "ahmet", "demir", {45, 55, 65, 75}},
+        {106, "eda", "orkun", {54, 65, 76, 87}},
+        {107, "ekrem", "yıl", {76, 45, 76, 65}},
+        {108, "ayca", "bahce", {54, 65, 76, 56}},
+        {109, "kemal", "deger", {54, 65, 76, 56}},
+        {110, "selin", "yilmaz", {76, 45, 76, 65}}
+    };
+
+    int secim, numara; // Kullanıcıdan seçim ve öğrenci numarası alacağız
+    while (1) { // Sonsuz döngü içinde kullanıcıdan giriş alıyoruz
+        printf("\n1- Notlari Goruntule\n");
+        printf("2- Ortalama Hesaplama\n");
+        printf("3 - Not Girişi Yap\n");
+        printf("0- Cikis\n");
+        printf("Secim Yapiniz: ");
+        scanf("%d", &secim); // Kullanıcıdan bir seçim alıyoruz
+
+        if (secim == 0) break; // Eğer kullanıcı 0 girerse programı sonlandırıyoruz
+
+        printf("Ogrenci Numarasi: ");
+        scanf("%d", &numara); // Öğrenci numarasını alıyoruz
+
+        if (secim == 1) {
+            notGoruntule(ogrenciler, numara); // Notları görüntüleme fonksiyonunu çağırıyoruz
+        } else if (secim == 2) {
+            notOrtalaması(ogrenciler, numara); // Not ortalaması hesaplama fonksiyonunu çağırıyoruz
+        } else if (secim == 3) {
+            notGir(ogrenciler, numara); // Not girişi yapma fonksiyonunu çağırıyoruz
+        }
+    }
+    return 0; // Programı sonlandırıyoruz
+}

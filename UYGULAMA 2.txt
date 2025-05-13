@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <string.h>
+
+#define OGRENCI_SAYISI 10
+#define DERS_SAYISI 4
+
+typedef struct {
+    int numara;
+    char ad[50];
+    char soyad[50];
+    float notlar[DERS_SAYISI];
+} Ogrenci;
+
+void notGoruntule(Ogrenci *ogrenciler, int numara) {
+    for (int i = 0; i < OGRENCI_SAYISI; i++) {
+        if (ogrenciler[i].numara == numara) {
+            printf("Öğrenci: %s %s\n", ogrenciler[i].ad, ogrenciler[i].soyad);
+            for (int j = 0; j < DERS_SAYISI; j++) {
+                printf("Ders %d Notu: %.2f\n", j + 1, ogrenciler[i].notlar[j]);
+            }
+            return;
+        }
+    }
+    printf("Öğrenci bulunamadı.\n");
+}
+
+void notOrtalamasi(Ogrenci *ogrenciler, int numara) {
+    for (int i = 0; i < OGRENCI_SAYISI; i++) {
+        if (ogrenciler[i].numara == numara) {
+            float toplam = 0;
+            for (int j = 0; j < DERS_SAYISI; j++) {
+                toplam += ogrenciler[i].notlar[j];
+            }
+            printf("Öğrencinin Not Ortalaması: %.2f\n", toplam / DERS_SAYISI);
+            return;
+        }
+    }
+    printf("Öğrenci bulunamadı.\n");
+}
+
+int main() {
+    Ogrenci ogrenciler[OGRENCI_SAYISI] = {
+        {101, "Ali", "Yılmaz", {90, 85, 78, 92}},
+        {102, "Ayşe", "Kara", {88, 76, 95, 89}},
+        {103, "Mehmet", "Demir", {70, 60, 85, 80}},
+        {104, "Fatma", "Çelik", {90, 92, 88, 94}}
+    };
+
+    int secim, numara;
+    while (1) {
+        printf("\n1 - Notları Goruntule\n");
+        printf("2 - Not Ortalaması Hesapla\n");
+        printf("0 - Çıkış\n");
+        printf("Seçim: ");
+        scanf("%d", &secim);
+
+        if (secim == 0) break;
+
+        printf("Oğrenci Numarası: ");
+        scanf("%d", &numara);
+
+        if (secim == 1) {
+            notGoruntule(ogrenciler, numara);
+        } else if (secim == 2) {
+            notOrtalamasi(ogrenciler, numara);
+        } else {
+            printf("Gecersiz secim!\n");
+        }
+    }
+
+    return 0;
+}

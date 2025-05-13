@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdint.h>
+
+// Cihaz verisini temsil etmek için bir union ve bit field yapısı
+typedef union {
+    uint32_t veri;  // 32-bit'lik bir veri alanı
+    uint8_t byte[4];  // Bu veri 4 byte'lık bir dizi ile temsil edilebilir
+    struct {
+        uint8_t state : 1;           // Bit 0: Cihazın açık mı kapalı mı olduğunu belirten bit (1 bit)
+        uint8_t hata1 : 1;           // Bit 1: Hata durumu 1 (1 bit)
+        uint8_t hata2 : 1;           // Bit 2: Hata durumu 2 (1 bit)
+        uint8_t reserved : 1;        // Bit 3: Bu bit kullanılmıyor (1 bit)
+        uint16_t timeing : 12;       // Bit 4-15: Cihazın çalışma süresi (12 bit)
+        uint16_t sicaklik : 16;      // Bit 16-31: Cihazın sıcaklık verisi (16 bit)
+    };
+} CihazVerisi;
+
+void sendData(uint8_t *data, uint16_t len) {
+    // Bu fonksiyonun içeriği verilmemiştir, ancak burada veriyi gönderecek bir fonksiyon olmalı.
+    // Örneğin, veriyi bir ağ üzerinden veya başka bir cihazla paylaşmak amacıyla kullanılır.
+}
+
+int main() {
+    // Cihaz verisini tutan değişken tanımlanıyor.
+    CihazVerisi veri1;
+    
+    // 32-bit'lik veriye değer ataması yapılır. Bu veri, hexadecimal formatında bir değerdir.
+    veri1.veri = 0x75306245;  // Bu veri cihazın tüm parametrelerini içerir.
+
+    // Veriyi byte array olarak sendData fonksiyonuna gönderiyoruz.
+    sendData(veri1.byte, 4);  // 4 byte'lık veriyi sendData fonksiyonuna gönderiyoruz.
+
+    // Bit field ile erişilen parametreleri ekrana yazdırıyoruz.
+    printf("Açık/Kapalı Durumu (state): %u\n", veri1.state);   // state bitini yazdırıyoruz
+    printf("Hata Durumu 1 (hata1): %u\n", veri1.hata1);   // hata1 bitini yazdırıyoruz
+    printf("Hata Durumu 2 (hata2): %u\n", veri1.hata2);   // hata2 bitini yazdırıyoruz
+    printf("Kullanılmayan Bit (reserved): %u [Dikkate alınmaz]\n", veri1.reserved);  // reserved bitini yazdırıyoruz
+    printf("Cihaz Çalışma Süresi (timeing): %u saat\n", veri1.timeing);  // timeing alanını yazdırıyoruz
+    printf("Sıcaklık Ham Değeri (sicaklik): %u\n", veri1.sicaklik);  // sicaklik alanını yazdırıyoruz
+
+    // Sıcaklık ham değerini °C'ye dönüştürüyoruz (100'e bölerek)
+    float sicaklik = (float)veri1.sicaklik / 100.0;
+    
+    // Dönüştürülmüş sıcaklık bilgisini ekrana yazdırıyoruz.
+    printf("Sıcaklık: %.2f°C\n", sicaklik);
+
+    return 0;  // Programın başarılı bir şekilde tamamlandığını belirtiyoruz.
+}

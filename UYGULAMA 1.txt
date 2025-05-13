@@ -1,0 +1,56 @@
+#include <stdio.h>  // Standart giriş/çıkış işlemleri için kütüphane
+
+#include <stdint.h>  // Tam sayı türleri için (uint32_t, uint8_t) kütüphanesi
+
+// 32-bit veriyi byte olarak bölmek için union tanımlıyoruz
+typedef union {
+    uint32_t veri;    // 32-bit cihaz verisi (tam sayı)
+    uint8_t byte[4];  // 4 adet 8-bitlik byte (dizi)
+} CihazVerisi;  // Union türüne 'CihazVerisi' ismini veriyoruz
+
+// Veriyi byte'lara ayırarak işleme fonksiyonu
+void sendData(uint8_t *data, uint16_t len) {  
+    // 32-bit veriyi byte'lardan geri birleştiriyoruz
+    uint32_t veri = ((uint32_t)data[0] << 24) |   // İlk byte'ı 24 bit sola kaydırıyoruz
+                    ((uint32_t)data[1] << 16) |   // İkinci byte'ı 16 bit sola kaydırıyoruz
+                    ((uint32_t)data[2] << 8)  |   // Üçüncü byte'ı 8 bit sola kaydırıyoruz
+                    ((uint32_t)data[3]);          // Dördüncü byte'ı olduğu gibi ekliyoruz
+
+    // 🔹 Açık/Kapalı durumu (Bit 0)
+    uint8_t acikKapali = (veri >> 0) & 1;   // Bit 0'ı sağa kaydırarak ve 1 ile maskeliyoruz
+
+    // 🔹 Hata Durumları (Bit 1 ve 2)
+    uint8_t hata1 = (veri >> 1) & 1;   // Bit 1'i sağa kaydırarak ve 1 ile maskeliyoruz
+    uint8_t hata2 = (veri >> 2) & 1;   // Bit 2'yi sağa kaydırarak ve 1 ile maskeliyoruz
+
+    // 🔹 Kullanılmayan bit (Bit 3) [Bu sadece gösterim amaçlı]
+    uint8_t kullanilmiyor = (veri >> 3) & 1;  // Bit 3'ü sağa kaydırarak ve 1 ile maskeliyoruz
+
+    // 🔹 Cihazın çalışma süresi (Bit 4 - 15, yani 12 bit)
+    uint16_t calismaSuresi = (veri >> 4) & 0xFFF;  // 0xFFF = 12 bit maskeleme (bit 4-15 arası)
+
+    // 🔹 Sıcaklık ham data (Bit 16 - 31, yani 16 bit)
+    uint16_t sicaklikHam = (veri >> 16) & 0xFFFF;  // 0xFFFF = 16 bit maskeleme (bit 16-31 arası)
+
+    // 🔹 Gerçek sıcaklık değeri
+    float sicaklik = (float)sicaklikHam / 100.0;  // Sıcaklık ham verisini 100’e bölerek gerçek değeri elde ediyoruz
+
+    // 📌 Sonuçları yazdır
+    printf("Açık/Kapalı Durumu: %d\n", acikKapali);  // Açık/Kapalı durumu ekrana yazdırılır
+    printf("Hata Durumu 1: %d\n", hata1);            // Hata durumu 1 ekrana yazdırılır
+    printf("Hata Durumu 2: %d\n", hata2);            // Hata durumu 2 ekrana yazdırılır
+    printf("Kullanılmayan Bit (3): %d [Dikkate alınmaz]\n", kullanilmiyor); // Kullanılmayan bit yazdırılır
+    printf("Cihaz Çalışma Süresi: %d saat\n", calismaSuresi);  // Çalışma süresi ekrana yazdırılır
+    printf("Sıcaklık: %.2f°C\n", sicaklik);  // Sıcaklık değeri ekrana yazdırılır
+}
+
+int main() {
+    // Union ile örnek 32-bit veri oluşturuyoruz
+    CihazVerisi veri;  
+    veri.veri = 0x75306245;  // 📌 Örnek cihazdan gelen veri (hexadecimal formatta)
+
+    // sendData fonksiyonunu çağırarak veriyi işleyelim
+    sendData(veri.byte, 4);  // Union’ın byte dizisini sendData fonksiyonuna gönderiyoruz
+
+    return 0;  // Program başarıyla tamamlandı
+}
