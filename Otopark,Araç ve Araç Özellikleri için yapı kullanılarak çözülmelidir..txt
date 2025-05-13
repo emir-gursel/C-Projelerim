@@ -1,0 +1,65 @@
+#include <stdio.h>      // Standart giriş ve çıkış işlemleri (printf, scanf vb.) için kütüphane
+#include <stdlib.h>     // Genel amaçlı yardımcı fonksiyonlar için kütüphane (dinamik bellek yönetimi vb.)
+#include <string.h>     // String işlemleri için kütüphane (fgets, strcspn gibi fonksiyonlar için)
+
+typedef struct {       // AracOzellik isimli bir yapı (struct) tanımlıyoruz
+    char Plaka[50];     // Aracın plakasını tutan bir dizi (string)
+    char Model[50];     // Aracın modelini tutan bir dizi (string)
+    char Renk[50];      // Aracın rengini tutan bir dizi (string)
+} AracOzellik;
+
+typedef struct {       // Arac isimli bir başka yapı (struct) tanımlıyoruz
+    AracOzellik Ozellikler;  // Bu yapının içinde, AracOzellik yapısını kullanıyoruz (Plaka, Model, Renk)
+    char GirisSaati[12];     // Aracın giriş saatini tutan bir dizi (string)
+} Arac;
+
+typedef struct {       // Otopark isimli bir başka yapı (struct) tanımlıyoruz
+    Arac Araclar[1000];  // Otoparktaki araçları tutacak dizi (1000 araca kadar yer ayrılmış)
+    int AracSayisi;      // Otoparkta kaç araç olduğunu tutan bir sayaç
+} Otopark;
+
+Otopark BaharOtoPark = {0};  // Otopark tipinde bir değişken tanımlıyoruz ve başlangıçta tüm değerleri sıfırlıyoruz
+
+// Fonksiyon prototipleri (fonksiyonların başta tanımlanması, derleyicinin bu fonksiyonları tanıyabilmesi için gerekli)
+void AracEkle();   
+void AraclariListele();
+
+int main() {         // main fonksiyonu, programın başlangıç noktası
+    AracEkle();      // AracEkle fonksiyonunu çağırarak bir araç ekliyoruz
+    AracEkle();      // Yine AracEkle fonksiyonunu çağırarak başka bir araç ekliyoruz
+    AraclariListele(); // Otoparkta bulunan araçları listeleyen fonksiyonu çağırıyoruz
+    return 0;        // Program başarıyla sonlanır
+}
+
+void AracEkle() {    // AracEkle fonksiyonu, yeni bir aracın bilgilerini alır ve otoparka ekler
+    Arac arc;        // Arac tipinde bir değişken tanımlıyoruz
+
+    printf("\nArac bilgilerini giriniz...\n");   // Kullanıcıya araç bilgilerini girmesini söyleyen mesaj
+    printf("Plaka: ");  // Kullanıcıdan aracın plakasını girmesini isteyen mesaj
+    fgets(arc.Ozellikler.Plaka, sizeof(arc.Ozellikler.Plaka), stdin);  // Kullanıcıdan plaka bilgisi alıyoruz (fgets, buffer overflow'a karşı güvenlidir)
+    arc.Ozellikler.Plaka[strcspn(arc.Ozellikler.Plaka, "\n")] = 0;  // fgets '\n' karakterini de alabilir, onu temizliyoruz
+
+    printf("Model: ");  // Kullanıcıdan aracın modelini girmesini isteyen mesaj
+    fgets(arc.Ozellikler.Model, sizeof(arc.Ozellikler.Model), stdin); // Kullanıcıdan model bilgisi alıyoruz
+    arc.Ozellikler.Model[strcspn(arc.Ozellikler.Model, "\n")] = 0;   // Yeni satır karakterini temizliyoruz
+
+    printf("Renk: ");   // Kullanıcıdan aracın rengini girmesini isteyen mesaj
+    fgets(arc.Ozellikler.Renk, sizeof(arc.Ozellikler.Renk), stdin); // Kullanıcıdan renk bilgisi alıyoruz
+    arc.Ozellikler.Renk[strcspn(arc.Ozellikler.Renk, "\n")] = 0;   // Yeni satır karakterini temizliyoruz
+
+    printf("Giris saati: ");   // Kullanıcıdan aracın giriş saatini girmesini isteyen mesaj
+    fgets(arc.GirisSaati, sizeof(arc.GirisSaati), stdin);   // Kullanıcıdan giriş saati bilgisi alıyoruz
+    arc.GirisSaati[strcspn(arc.GirisSaati, "\n")] = 0;  // Yeni satır karakterini temizliyoruz
+
+    BaharOtoPark.Araclar[BaharOtoPark.AracSayisi] = arc;   // Yeni eklenen aracı otopark dizisine ekliyoruz
+    BaharOtoPark.AracSayisi++;   // Otoparkta bulunan araç sayısını bir artırıyoruz
+}
+
+void AraclariListele() {    // AraclariListele fonksiyonu, otoparktaki araçları listeler
+    int i;   // Dizi üzerinde dönebilmek için sayaç
+
+    printf("\n**********Otoparktaki Araclar**********\n");  // Başlık yazdırıyoruz
+    for (i = 0; i < BaharOtoPark.AracSayisi; i++) {   // Otoparktaki her araç için döngü başlatıyoruz
+        printf("%d. arac plaka: %s\n", i + 1, BaharOtoPark.Araclar[i].Ozellikler.Plaka); // Araçların plakasını yazdırıyoruz
+    }
+}
