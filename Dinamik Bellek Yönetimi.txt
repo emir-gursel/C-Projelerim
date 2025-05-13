@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int n;  // Kullanıcıdan alınacak dizi boyutunu tutacak değişken
+
+    printf("kac tane sayi gireceksiniz? ");  // Kullanıcıya dizi boyutunu sormak için mesaj
+    scanf("%d", &n);  // Kullanıcının girdiği dizi boyutunu n değişkenine atıyoruz
+
+    // Dinamik bellek ayırma. Kullanıcı tarafından belirlenen n sayısı kadar int türünde alan ayırıyoruz.
+    int* arr = (int*)malloc(n * sizeof(int));
+
+    // malloc ile bellek ayrılması başarısız olursa (yani bellek yeterli değilse)
+    if (arr == NULL) {
+        printf("Bellek ayırma hatası!\n");  // Hata mesajı veriyoruz
+        return 1;  // Hata durumunda programı sonlandırıyoruz
+    }
+
+    // Kullanıcıdan dizi elemanlarını alıyoruz
+    for (int i = 0; i < n; i++) {
+        printf("Dizi Elemanı %d: ", i + 1);  // Kullanıcıya dizinin i+1. elemanını sorduğumuzu belirten mesaj
+        scanf("%d", &arr[i]);  // Kullanıcıdan bir sayı alıp, arr[i] dizisine ekliyoruz
+    }
+
+    // Bubble sort (Baloncuk sıralama) algoritması ile diziyi sıralıyoruz
+    for (int i = 0; i < n - 1; i++) {  // Dış döngü: sıralama için gerekli geçiş sayısı kadar dönüyor
+        for (int j = 0; j < n - i - 1; j++) {  // İç döngü: diziyi sıralarken ardışık elemanları karşılaştırıyoruz
+            if (arr[j] > arr[j + 1]) {  // Eğer arr[j] > arr[j+1] ise, bu elemanları yer değiştiriyoruz
+                int temp = arr[j];  // Geçici değişken ile arr[j]'yi saklıyoruz
+                arr[j] = arr[j + 1];  // arr[j] ile arr[j+1]'i takaslıyoruz
+                arr[j + 1] = temp;  // arr[j+1]'i geçici değişkenle takaslıyoruz
+            }
+        }
+    }
+
+    // Sıralanmış diziyi ekrana yazdırıyoruz
+    printf("Sıralı Dizi: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);  // Sıralanmış dizinin her elemanını yazdırıyoruz
+    }
+    printf("\n");  // Yazdırma işlemi sonrasında yeni satır
+
+    free(arr);  // Dinamik olarak ayrılan belleği serbest bırakıyoruz
+
+    return 0;  // Programın başarılı bir şekilde sonlandığını belirtiyoruz
+}

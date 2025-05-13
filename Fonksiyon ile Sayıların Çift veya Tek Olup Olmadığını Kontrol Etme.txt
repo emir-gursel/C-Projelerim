@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+int ciftMi(int sayi);
+
+int main() {
+    int sayi;
+    
+    // Kullanıcıdan bir sayı alıyoruz
+    printf("Bir sayı giriniz: ");
+    scanf("%d", &sayi);
+    
+    // Fonksiyonu çağırarak sonucu yazdırıyoruz
+    if (ciftMi(sayi)) {
+        printf("Sayı çift.\n");
+    } else {
+        printf("Sayı tek.\n");
+    }
+    
+    return 0;
+}
+
+// Sayının çift olup olmadığını kontrol eden fonksiyon
+int ciftMi(int sayi) {
+    if (sayi % 2 == 0) {
+        return 1;  // Çift
+    } else {
+        return 0;  // Tek
+    }
+}

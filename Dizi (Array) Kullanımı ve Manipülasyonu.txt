@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int arr[5];  // 5 elemanlı bir dizi tanımlıyoruz
+    int i, min, max, toplam = 0;  // Döngü değişkeni i, min ve max sayılar, toplam ve ortalama hesaplamak için değişkenler
+    float ortalama;  // Ortalama için bir float değişken
+
+    // Kullanıcıdan 5 sayı girmesini istiyoruz
+    printf("5 sayi giriniz: ");
+    for (i = 0; i < 5; i++) {
+        scanf("%d", &arr[i]);  // Kullanıcıdan bir sayı alıp dizinin her bir elemanına atıyoruz
+    }
+
+    // Bubble Sort algoritması ile diziyi küçükten büyüğe sıralıyoruz
+    for (i = 0; i < 4; i++) {  // Dış döngü: sıralama için gerekli geçiş sayısı kadar dönüyor
+        for (int j = i + 1; j < 5; j++) {  // İç döngü: ardışık elemanları karşılaştırıyoruz
+            if (arr[i] > arr[j]) {  // Eğer arr[i] > arr[j] ise, bu elemanları yer değiştiriyoruz
+                int temp = arr[i];  // Geçici değişken ile arr[i]'yi saklıyoruz
+                arr[i] = arr[j];  // arr[i] ile arr[j]'yi takaslıyoruz
+                arr[j] = temp;  // arr[j]'yi geçici değişkenle takaslıyoruz
+            }
+        }
+    }
+
+    // Dizinin en küçük elemanı sıralama sonrası arr[0] olacak
+    min = arr[0];  
+    // Dizinin en büyük elemanı sıralama sonrası arr[4] olacak
+    max = arr[4]; 
+
+    // Dizinin elemanlarını toplayarak toplam değişkenini hesaplıyoruz
+    for (i = 0; i < 5; i++) {
+        toplam += arr[i];  // Dizinin her elemanını toplam değişkenine ekliyoruz
+    }
+
+    // Ortalama hesaplama: toplamı 5'e bölerek ortalama değerini buluyoruz
+    ortalama = toplam / 5.0;  // Sonuç float türünde olacak, o yüzden 5'in float değeri (5.0) kullanıyoruz
+
+    // Sonuçları ekrana yazdırıyoruz
+    printf("\nSıralı dizi: ");
+    for (i = 0; i < 5; i++) {
+        printf("%d ", arr[i]);  // Sıralanmış diziyi ekrana yazdırıyoruz
+    }
+    
+    printf("\nEn küçük sayı: %d", min);  // En küçük sayıyı yazdırıyoruz
+    printf("\nEn büyük sayı: %d", max);  // En büyük sayıyı yazdırıyoruz
+    printf("\nOrtalama: %.2f\n", ortalama);  // Ortalama sonucu, iki ondalıklı basamağa kadar yazdırıyoruz
+
+    return 0;  // Programın başarıyla tamamlandığını belirtiyoruz
+}

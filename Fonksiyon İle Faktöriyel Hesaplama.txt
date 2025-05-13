@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int faktoriyel(int sayi);
+
+int main() {
+    int sayi;
+    
+    // Kullanıcıdan sayı alıyoruz
+    printf("Bir sayı giriniz: ");
+    scanf("%d", &sayi);
+    
+    // Faktöriyel hesaplamasını yapıyoruz ve sonucu yazdırıyoruz
+    printf("%d! = %d\n", sayi, faktoriyel(sayi));
+    
+    return 0;
+}
+
+// Faktöriyel hesaplayan fonksiyon
+int faktoriyel(int sayi) {
+    int sonuc = 1;
+    
+    for (int i = 1; i <= sayi; i++) {
+        sonuc *= i;
+    }
+    
+    return sonuc;
+}
