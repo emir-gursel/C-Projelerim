@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+// Durumları tanımlıyoruz
+typedef enum {
+    KAPALI,
+    ACIK
+} KapıDurumu;
+
+// Fonksiyon prototipleri
+void kapıDurumunuYazdir(KapıDurumu durum);
+
+int main() {
+    KapıDurumu durum = KAPALI; // Başlangıç durumu: Kapalı
+    char tus;
+
+    // Sonsuz döngü, kullanıcı her tuşa basışında kapı durumunu değiştirecek
+    while (1) {
+        printf("Su anki durum: ");
+        kapıDurumunuYazdir(durum); // Durum yazdırılıyor
+
+        // Kullanıcıdan tus girişi alınıyor
+        printf("Kapıyı degistirmek icin herhangi bir tusa basın (Çıkmak için 'q' tuşuna basın): ");
+        tus = getchar();  // Tuşa basılmasını bekliyoruz
+        getchar(); // Yeni satır karakterini alıyoruz (getchar() bir ekstra enter alır)
+
+        if (tus == 'q' || tus == 'Q') {
+            printf("Program sonlandırılıyor.\n");
+            break; // Programdan çıkıyoruz
+        }
+
+        // Durumları değiştiriyoruz
+        if (durum == KAPALI) {
+            durum = ACIK; // Kapı açılır
+        } else {
+            durum = KAPALI; // Kapı kapanır
+        }
+    }
+
+    return 0;
+}
+
+// Durum yazdırma fonksiyonu
+void kapıDurumunuYazdir(KapıDurumu durum) {
+    if (durum == KAPALI) {
+        printf("Kapalı\n");
+    } else {
+        printf("Açık\n");
+    }
+}
