@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// İki sayıyı toplamak için fonksiyon bildirimi
+int topla(int sayi1, int sayi2);
+
+// İki sayıyı çıkarmak için fonksiyon bildirimi
+int cikar(int sayi1, int sayi2);
+
+// İki sayıyı çarpmak için fonksiyon bildirimi
+int carp(int sayi1, int sayi2);
+
+int main()
+{
+   int sayi1, sayi2;  // Kullanıcıdan alınacak iki sayı için değişkenler
+   int toplama, cikarma, carpma;  // Sonuçları tutacak değişkenler
+   
+   printf("sayi1 ve sayi2'yi giriniz: ");  // Kullanıcıya iki sayı girmesini isteyen mesaj
+   scanf("%d%d", &sayi1, &sayi2);  // Kullanıcıdan iki sayı alıp, sayi1 ve sayi2'ye atıyoruz
+   
+   toplama = topla(sayi1, sayi2);  // Toplama işlemi için topla fonksiyonunu çağırıyoruz
+   cikarma = cikar(sayi1, sayi2);  // Çıkarma işlemi için cikar fonksiyonunu çağırıyoruz
+   carpma = carp(sayi1, sayi2);  // Çarpma işlemi için carp fonksiyonunu çağırıyoruz
+   
+   // Sonuçları ekrana yazdırıyoruz
+   printf("Toplam= %d\n", toplama);  // Toplam sonucu yazdırıyoruz
+   printf("cikarma= %d\n", cikarma);  // Çıkarma sonucu yazdırıyoruz
+   printf("carpma= %d\n", carpma);  // Çarpma sonucu yazdırıyoruz
+
+   return 0;  // Programın başarıyla tamamlandığını belirtiyoruz
+}
+
+// Toplama fonksiyonu
+int topla(int sayi1, int sayi2)
+{
+    return (sayi1 + sayi2);  // İki sayıyı toplar ve sonucu döndürür
+}
+
+// Çıkarma fonksiyonu
+int cikar(int sayi1, int sayi2)
+{
+    return (sayi1 - sayi2);  // İki sayıyı çıkarır ve sonucu döndürür
+}
+
+// Çarpma fonksiyonu
+int carp(int sayi1, int sayi2)
+{
+    return (sayi1 * sayi2);  // İki sayıyı çarpar ve sonucu döndürür
+}

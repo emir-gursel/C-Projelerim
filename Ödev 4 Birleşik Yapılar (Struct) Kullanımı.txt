@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Öğrenci bilgilerini tutan yapıyı (struct) tanımlıyoruz
+struct students{
+    char* name;        // Öğrencinin adı
+    char* lastname;    // Öğrencinin soyadı
+    int no;            // Öğrencinin numarası
+    float score;       // Öğrencinin notu
+};
+
+int main() 
+{
+    // Öğrenci bilgilerini tutan bir yapı oluşturuyoruz
+    struct students x = {"murat", "bastug", 19, 95};  
+
+    // Öğrenci bilgilerini ekrana yazdırıyoruz
+    printf("name: %s\n", x.name);        // Öğrencinin adını yazdırıyoruz
+    printf("last name: %s\n", x.lastname);  // Öğrencinin soyadını yazdırıyoruz
+    printf("no: %d\n", x.no);           // Öğrencinin numarasını yazdırıyoruz
+    printf("scovre: %.2f\n", x.score);   // Öğrencinin notunu yazdırıyoruz (2 ondalıklı basamağa yuvarlanmış)
+
+    return 0; // Programın başarılı bir şekilde sonlanmasını sağlıyoruz
+}
